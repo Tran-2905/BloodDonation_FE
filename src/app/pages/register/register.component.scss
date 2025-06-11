@@ -1,0 +1,160 @@
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+    background: #000;
+    /* Nền đen tuyền */
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-card {
+    background: rgba(10, 10, 10, 0.95);
+    /* Nền đen đậm */
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 60px rgba(255, 0, 0, 0.3);
+    /* Đổ bóng đỏ */
+    border: 1px solid rgba(220, 38, 38, 0.5);
+    /* Viền đỏ đậm */
+    max-width: 600px;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #ff3b3b, #b30000);
+    /* Gradient đỏ đậm */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.auth-header p {
+    color: #bbb;
+    /* Chữ xám nhạt */
+    font-size: 1.1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.address-section {
+    border-top: 1px solid rgba(220, 38, 38, 0.5);
+    /* Viền đỏ */
+    padding-top: 2rem;
+    margin-top: 1rem;
+}
+
+.address-section h3 {
+    color: #ff3b3b;
+    /* Tiêu đề đỏ */
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #b30000;
+    /* Nền đỏ đậm */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.auth-btn:hover {
+    background: #ff0000;
+    /* Hiệu ứng hover đỏ tươi */
+}
+
+.auth-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #5a0000;
+    /* Trạng thái vô hiệu */
+}
+
+.loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.auth-links p {
+    color: #999;
+    /* Chữ xám */
+}
+
+.auth-links a {
+    color: #ff4d4d;
+    /* Link đỏ nhạt */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: #ff9999;
+    /* Hiệu ứng hover đỏ nhạt */
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .auth-card {
+        margin: 1rem;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+    }
+
+    .auth-header h1 {
+        font-size: 2rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

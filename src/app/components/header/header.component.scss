@@ -1,0 +1,53 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .logo img {
+        height: 40px;
+    }
+
+    .navbar {
+        display: flex;
+        gap: 24px;
+
+        a {
+            text-decoration: none;
+            color: #d32f2f;
+            font-weight: 500;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #b71c1c;
+            }
+        }
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: 12px;
+
+        .login,
+        .register {
+            padding: 6px 18px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .login {
+            background: transparent;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+
+        .register {
+            background: #d32f2f;
+            color: #fff;
+        }
+    }
+}
