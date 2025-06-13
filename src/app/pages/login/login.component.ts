@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserLogin } from '../../models/userLogin';
 import { userService } from '../../services/user-service';
+import { instanceToPlain } from 'class-transformer';
+import { UserLogin } from '../../models/UserLogin';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
   password: string = '';
   loginError: string | null = null;
   datasource = Observable<UserLogin>
-  constructor(private _userService: userService) { };
+  constructor(private _userService: userService, private router: Router) { };
 
   ngOnInit(): void {
     // If any initialization is required, it can go here
@@ -29,15 +30,19 @@ export class LoginComponent {
       return;  // If the form is invalid, return
     }
 
-    const userLogin: UserLogin = {
-      phone_number: this.phoneNumber,
-      password_hash: this.password
-    };
+    const user = new UserLogin(this.phoneNumber, this.password);
+
+    const payload = instanceToPlain(user);
 
     // Call the loginUser method from the service
-    this._userService.login(userLogin).subscribe(
+    this._userService.login(payload).subscribe(
       response => {
+        if (!response || !response.token) {
+          this.loginError = 'Login failed. Please check your credentials and try again.';
+          return;
+        }
         console.log('Login successful:', response);
+        this.router.navigate(['/']); // Navigate to the dashboard or another page on successful login
       },
       error => {
         console.log("Login failed", error);
@@ -45,6 +50,7 @@ export class LoginComponent {
       }
     );
   }
+
 
   showPassword: boolean = false;
   togglePasswordVisibility(): void {

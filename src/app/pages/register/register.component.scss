@@ -1,21 +1,20 @@
 .auth-page {
     min-height: 100vh;
-    display: flex;
     align-items: center;
     padding: 2rem 0;
-    background: #000;
+    background: white;
     /* Nền đen tuyền */
 }
 
 .auth-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    // align-items: center;
     min-height: 80vh;
 }
 
 .auth-card {
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(246, 244, 244, 0.95);
     /* Nền đen đậm */
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -45,7 +44,7 @@
 }
 
 .auth-header p {
-    color: #bbb;
+    color: #0a0202;
     /* Chữ xám nhạt */
     font-size: 1.1rem;
 }
@@ -53,7 +52,7 @@
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 5rem;
 }
 
 .address-section {
