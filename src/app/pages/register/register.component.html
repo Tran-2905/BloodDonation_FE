@@ -101,12 +101,15 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn-primary auth-btn">
-                            <!-- [disabled]="!registerForm.form.valid || isLoading"> -->
-                            <!-- <span *ngIf="isLoading" class="loading-spinner"></span>
+                        <!-- <button type="submit" class="btn-primary auth-btn" > -->
+                        <!-- [disabled]="!registerForm.form.valid || isLoading"> -->
+                        <!-- <span *ngIf="isLoading" class="loading-spinner"></span>
                             {{ isLoading ? 'Creating Account...' : 'Create Account' }} -->
-                            Create Account
-                        </button>
+                        <!-- Create Account -->
+                        <!-- </button> -->
+
+                        <button type="submit" class="btn-primary auth-btn"
+                            [disabled]="!registerForm.valid">Submit</button>
                     </div>
 
                     <div class="auth-links">

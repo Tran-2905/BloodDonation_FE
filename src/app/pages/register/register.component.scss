@@ -14,14 +14,13 @@
 }
 
 .auth-card {
-    background: rgba(246, 244, 244, 0.95);
+    background: white;
     /* Nền đen đậm */
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 3rem;
-    box-shadow: 0 20px 60px rgba(255, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(84, 83, 83, 0.3);
     /* Đổ bóng đỏ */
-    border: 1px solid rgba(220, 38, 38, 0.5);
     /* Viền đỏ đậm */
     max-width: 600px;
     width: 100%;
@@ -36,8 +35,7 @@
 .auth-header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #ff3b3b, #b30000);
-    /* Gradient đỏ đậm */
+    background: red;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

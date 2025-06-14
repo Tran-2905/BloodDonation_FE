@@ -1,1 +1,175 @@
-<p>home works!</p>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-background"></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content fade-in-up">
+                    <h1 class="hero-title">
+                        Cứu sống những người bạn
+                        <span class="text-white">chưa từng gặp</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Tham gia cộng đồng hiến máu tình nguyện để mang lại hy vọng và sự sống cho những người cần giúp
+                        đỡ.
+                        Mỗi giọt máu của bạn có thể cứu sống đến 3 người.
+                    </p>
+                    <div class="hero-actions">
+                        <a routerLink="/register-donation" class="btn btn-hero-primary">
+                            <i class="bi bi-heart-fill me-2"></i>
+                            Đăng ký hiến máu
+                        </a>
+                        <a routerLink="/bloodtype" class="btn btn-hero-secondary">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Tìm hiểu thêm
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image">
+                    <div class="floating-card">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4" *ngFor="let stat of stats; let i = index">
+                <div class="stats-card" [style.animation-delay]="i * 0.1 + 's'">
+                    <div class="stats-icon">
+                        <i class="bi" [class]="stat.icon"></i>
+                    </div>
+                    <div class="stats-number">{{ stat.number }}</div>
+                    <div class="stats-label">{{ stat.label }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="section-header">
+                    <h2 class="section-title">Tại sao hiến máu lại quan trọng?</h2>
+                    <p class="section-subtitle">
+                        Mỗi lần hiến máu, bạn có thể cứu sống đến 3 người. Máu hiến tặng được sử dụng trong các ca phẫu
+                        thuật khẩn cấp,
+                        điều trị ung thư, và nhiều tình huống y tế khác.
+                    </p>
+                </div>
+                <div class="benefits-list">
+                    <div class="benefit-item" *ngFor="let benefit of benefits">
+                        <div class="benefit-icon">
+                            <i class="bi" [class]="benefit.icon"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h5>{{ benefit.title }}</h5>
+                            <p>{{ benefit.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="process-card">
+                    <h5 class="card-title">
+                        <i class="bi bi-list-check me-2"></i>
+                        Quy trình hiến máu
+                    </h5>
+                    <div class="process-steps">
+                        <div class="process-step" *ngFor="let step of process; let i = index">
+                            <div class="step-number">{{ i + 1 }}</div>
+                            <div class="step-content">
+                                <h6>{{ step.title }}</h6>
+                                <p>{{ step.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Donations Section -->
+<section class="donations-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Những người hùng gần đây</h2>
+            <p class="section-subtitle">Cảm ơn những người đã đóng góp cho cộng đồng</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" *ngFor="let donation of recentDonations">
+                <div class="donation-card">
+                    <div class="donor-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h6 class="donor-name">{{ donation.name }}</h6>
+                    <div class="blood-type-badge">{{ donation.bloodType }}</div>
+                    <p class="donation-date">{{ donation.date }}</p>
+                    <div class="donation-amount">{{ donation.amount }}ml</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Câu chuyện cảm động</h2>
+            <p class="section-subtitle">Những chia sẻ từ cộng đồng hiến máu</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-4" *ngFor="let testimonial of testimonials">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="bi bi-quote quote-icon"></i>
+                        <p>{{ testimonial.content }}</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6>{{ testimonial.name }}</h6>
+                            <span>{{ testimonial.role }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content text-center">
+            <h2 class="cta-title">Sẵn sàng cứu sống ai đó?</h2>
+            <p class="cta-subtitle">
+                Tham gia ngay hôm nay và trở thành một phần của cộng đồng hiến máu tình nguyện
+            </p>
+            <div class="cta-actions">
+                <a routerLink="/register" class="btn btn-cta-primary">
+                    <i class="bi bi-person-plus me-2"></i>
+                    Đăng ký ngay
+                </a>
+                <a routerLink="/register-donation" class="btn btn-cta-secondary">
+                    <i class="bi bi-heart me-2"></i>
+                    Hiến máu ngay
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
