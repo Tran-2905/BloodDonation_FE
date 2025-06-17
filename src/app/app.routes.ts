@@ -6,6 +6,7 @@ import { BloodTypeComponent } from './pages/blood-type/blood-type.component';
 import { Home } from 'lucide-angular';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterDonationComponent } from './pages/registerdonation/registerdonation.component';
+import { AuthCallbackComponent } from './pages/auth-callback/auth-callback.component';
 
 export const routes: Routes = [
     {
@@ -17,6 +18,7 @@ export const routes: Routes = [
             { path: 'blood-type', component: BloodTypeComponent },
             { path: 'home', component: HomeComponent, data: { title: 'Trang chủ', icon: Home } },
             { path: 'register-donation', component: RegisterDonationComponent },
+            { path: 'auth/google/callback', component: AuthCallbackComponent }
         ]
     }
 ];

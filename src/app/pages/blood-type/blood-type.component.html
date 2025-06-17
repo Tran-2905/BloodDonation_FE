@@ -1,159 +1,157 @@
-<div class="container-fluid">
-    <!-- Blood Types Grid -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-3 mb-4" *ngFor="let bloodType of bloodTypes">
-                    <div class="blood-type-card">
-                        <div class="blood-type-icon">
-                            <span>{{ bloodType.type }}</span>
-                        </div>
-                        <h5 class="fw-bold mb-2">{{ bloodType.name }}</h5>
-                        <p class="text-muted mb-3">{{ bloodType.description }}</p>
-                        <div class="blood-type-stats">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Tỷ lệ dân số:</span>
-                                <span class="fw-bold">{{ bloodType.percentage }}%</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Có thể cho:</span>
-                                <span class="fw-bold">{{ bloodType.canGiveTo.join(', ') }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="text-muted">Có thể nhận:</span>
-                                <span class="fw-bold">{{ bloodType.canReceiveFrom.join(', ') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Compatibility Chart -->
-    <section class="py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="h1 fw-bold">Bảng tương thích nhóm máu</h2>
-                <p class="lead text-muted">Hiểu rõ ai có thể cho và nhận máu từ ai</p>
-            </div>
-
-            <div class="card card-modern">
-                <div class="card-body p-4">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead class="table-danger">
-                                <tr>
-                                    <th>Nhóm máu người cho</th>
-                                    <th *ngFor="let type of ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+']">
-                                        {{ type }}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let donor of compatibilityChart">
-                                    <td class="fw-bold">{{ donor.type }}</td>
-                                    <td *ngFor="let compatible of donor.compatibility"
-                                        [class]="compatible ? 'table-success' : 'table-light'">
-                                        <i class="bi"
-                                            [class]="compatible ? 'bi-check-circle-fill text-success' : 'bi-x-circle text-muted'"></i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Compatibility Chart Table -->
-    <div class="table-responsive">
-        <table class="table table-bordered text-center align-middle">
-            <thead class="table-danger">
-                <tr>
-                    <th>Nhóm máu</th>
-                    <th *ngFor="let recipient of bloodTypes">{{ recipient.type }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let donor of compatibilityChart">
-                    <th>{{ donor.type }}</th>
-                    <td *ngFor="let canDonate of donor.compatibility; let i = index">
-                        <span *ngIf="canDonate" class="text-success fw-bold">&#10003;</span>
-                        <span *ngIf="!canDonate" class="text-muted">&#10007;</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="blood-info-container">
+    <h1 class="main-title">Blood Information</h1>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button [ngClass]="{active: activeTab === 'types'}" (click)="activeTab = 'types'">Blood Types</button>
+        <button [ngClass]="{active: activeTab === 'compatibility'}"
+            (click)="activeTab = 'compatibility'">Compatibility</button>
+        <button [ngClass]="{active: activeTab === 'donation'}" (click)="activeTab = 'donation'">Donation
+            Process</button>
     </div>
 
-    <!-- Blood Facts -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="h1 fw-bold">Những điều thú vị về máu</h2>
+    <!-- Blood Types Tab -->
+    <div *ngIf="activeTab === 'types'" class="types-tab">
+        <h2>Blood Types</h2>
+        <div class="bloodtype-list">
+            <div *ngFor="let info of bloodTypeInfos" class="bloodtype-card">
+                <div class="bloodtype-header">
+                    <span class="bloodtype-label">{{ info.type }}</span>
+                    <span class="bloodtype-percent">{{ info.percent }}</span>
+                </div>
+                <div class="bloodtype-desc">{{ info.description }}</div>
+                <div class="bloodtype-fact">{{ info.fact }}</div>
             </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-md-6 col-lg-4 mb-4" *ngFor="let fact of bloodFacts">
-                    <div class="card card-modern h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="fact-icon bg-gradient-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
-                                style="width: 60px; height: 60px;">
-                                <i class="bi {{ fact.icon }}" style="font-size: 1.5rem;"></i>
-                            </div>
-                            <h5 class="fw-bold mb-2">{{ fact.title }}</h5>
-                            <p class="text-muted">{{ fact.description }}</p>
-                        </div>
+    <!-- Compatibility Tab -->
+    <div *ngIf="activeTab === 'compatibility'" class="compatibility-tab">
+        <h2 class="title">Blood Type Compatibility</h2>
+        <p class="subtitle">Understanding which blood types can donate to and receive from each other.</p>
+        <div class="compatibility-subtabs">
+            <button [ngClass]="{active: compatibilitySubTab === 'whole'}" (click)="compatibilitySubTab = 'whole'">Whole
+                Blood</button>
+            <button [ngClass]="{active: compatibilitySubTab === 'components'}"
+                (click)="compatibilitySubTab = 'components'">Blood Components</button>
+        </div>
+
+        <!-- Whole Blood Compatibility -->
+        <div *ngIf="compatibilitySubTab === 'whole'" class="whole-blood-section">
+            <h3>Whole Blood Compatibility</h3>
+            <p>Find out which blood types are compatible for whole blood transfusions.</p>
+            <label for="wholeBloodSelect" class="select-label">Select Blood Type</label>
+            <select id="wholeBloodSelect" [(ngModel)]="selectedWholeBloodType">
+                <option *ngFor="let type of bloodTypes" [value]="type.type">{{ type.type }}</option>
+            </select>
+            <div class="component-compatibility">
+                <div>
+                    <h4>Can Donate To</h4>
+                    <div class="badge-list">
+                        <span *ngFor="let t of wholeBloodInfo?.canDonateTo" class="badge badge-donate">{{ t }}</span>
                     </div>
+                </div>
+                <div>
+                    <h4>Can Receive From</h4>
+                    <div class="badge-list">
+                        <span *ngFor="let t of wholeBloodInfo?.canReceiveFrom" class="badge badge-receive">{{ t
+                            }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="special-notes">
+                <h4>Special Compatibility Notes</h4>
+                <p>Important information about blood type compatibility.</p>
+                <div class="note-card">
+                    <strong>Universal Donor</strong><br>
+                    O- blood is known as the universal donor because it can be given to patients of any blood type in
+                    emergency situations. This makes O- donors especially valuable for emergency transfusions when
+                    there's no time to determine a patient's blood type.
+                </div>
+                <div class="note-card">
+                    <strong>Universal Recipient</strong><br>
+                    AB+ blood type is the universal recipient and can receive blood from any other type.
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Universal Donors -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h2 class="h1 fw-bold mb-4">Người hiến máu vạn năng</h2>
-                    <div class="mb-4">
-                        <h5 class="fw-bold text-danger">O- (O âm tính)</h5>
-                        <p class="text-muted">
-                            Được gọi là "người hiến máu vạn năng" vì có thể cho máu cho tất cả các nhóm máu khác.
-                            Tuy nhiên, chỉ có thể nhận máu từ O-.
-                        </p>
-                    </div>
-                    <div class="mb-4">
-                        <h5 class="fw-bold text-danger">AB+ (AB dương tính)</h5>
-                        <p class="text-muted">
-                            Được gọi là "người nhận vạn năng" vì có thể nhận máu từ tất cả các nhóm máu.
-                            Tuy nhiên, chỉ có thể cho máu cho AB+.
-                        </p>
+        <!-- Blood Component Compatibility -->
+        <div *ngIf="compatibilitySubTab === 'components'" class="component-blood-section">
+            <h3>Blood Component Compatibility</h3>
+            <p>Find out which blood types are compatible for specific blood component transfusions.</p>
+            <div class="component-selectors">
+                <div>
+                    <label for="bloodTypeSelect">Select Blood Type</label>
+                    <select id="bloodTypeSelect" [(ngModel)]="selectedBloodType">
+                        <option *ngFor="let type of bloodTypes" [value]="type.type">{{ type.type }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="componentSelect">Select Component</label>
+                    <select id="componentSelect" [(ngModel)]="selectedComponent">
+                        <option *ngFor="let comp of bloodComponents">{{ comp }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="component-compatibility">
+                <div>
+                    <h4>Can Donate To</h4>
+                    <div class="badge-list">
+                        <span *ngFor="let t of compatibility?.canDonateTo" class="badge badge-donate">{{ t }}</span>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card card-modern">
-                        <div class="card-body p-4">
-                            <h5 class="fw-bold mb-3">Thống kê nhóm máu tại Việt Nam</h5>
-                            <div class="blood-stats">
-                                <div class="stat-item d-flex justify-content-between mb-3"
-                                    *ngFor="let stat of vietnamBloodStats">
-                                    <span class="fw-bold">{{ stat.type }}</span>
-                                    <div class="d-flex align-items-center">
-                                        <div class="progress me-3" style="width: 100px; height: 8px;">
-                                            <div class="progress-bar bg-danger" [style.width.%]="stat.percentage"></div>
-                                        </div>
-                                        <span class="fw-bold">{{ stat.percentage }}%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div>
+                    <h4>Can Receive From</h4>
+                    <div class="badge-list">
+                        <span *ngFor="let t of compatibility?.canReceiveFrom" class="badge badge-receive">{{ t }}</span>
                     </div>
                 </div>
             </div>
+            <div class="component-info">
+                <div class="info-card red">
+                    <h5>Red Blood Cells</h5>
+                    <p>Standard compatibility rules apply. O- is universal donor, AB+ is universal recipient.</p>
+                </div>
+                <div class="info-card blue">
+                    <h5>Plasma</h5>
+                    <p>Reverse compatibility rules. AB plasma can be given to all blood types, O plasma only to O
+                        recipients.</p>
+                </div>
+                <div class="info-card purple">
+                    <h5>Platelets</h5>
+                    <p>Generally ABO compatible. AB platelets are preferred universal donors for platelet transfusions.
+                    </p>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Donation Process Tab -->
+    <div *ngIf="activeTab === 'donation'" class="donation-tab">
+        <h2>Donation Process</h2>
+        <div class="donation-steps">
+            <div *ngFor="let step of donationSteps" class="donation-step-card">
+                <div class="donation-step-icon">{{ step.icon }}</div>
+                <div class="donation-step-title">{{ step.title }}</div>
+                <div class="donation-step-desc">{{ step.desc }}</div>
+            </div>
+        </div>
+        <div class="donation-tips">
+            <h4>Tips for a Successful Donation</h4>
+            <ul>
+                <li>Eat a healthy meal and drink plenty of water before donating.</li>
+                <li>Bring a valid ID and wear comfortable clothing.</li>
+                <li>Let staff know if you feel unwell at any time.</li>
+                <li>After donating, rest and enjoy the provided refreshments.</li>
+            </ul>
+        </div>
+        <div class="donation-faq">
+            <h4>Frequently Asked Questions</h4>
+            <strong>How often can I donate blood?</strong>
+            <p>Every 12 weeks for whole blood, every 2 weeks for plasma, and every 4 weeks for platelets.</p>
+            <strong>Is blood donation safe?</strong>
+            <p>Yes, all equipment is sterile and used only once. You cannot get any disease from donating blood.</p>
+            <strong>Who can donate?</strong>
+            <p>Most healthy people aged 18-60, weighing at least 45kg, can donate blood.</p>
+        </div>
+    </div>
 </div>

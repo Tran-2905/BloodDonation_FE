@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { userService } from '../../services/user-service';
 import { instanceToPlain } from 'class-transformer';
 import { UserLogin } from '../../models/UserLogin';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +22,7 @@ export class LoginComponent {
   password: string = '';
   loginError: string | null = null;
   datasource = Observable<UserLogin>
-  constructor(private _userService: userService, private router: Router) { };
+  constructor(private _userService: userService, private router: Router, private authService: AuthService, private toastService: ToastService) { };
 
   ngOnInit(): void {
     // If any initialization is required, it can go here
@@ -51,6 +54,9 @@ export class LoginComponent {
     );
   }
 
+  loginWithGoogle(): void {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  }
 
   showPassword: boolean = false;
   togglePasswordVisibility(): void {
