@@ -7,6 +7,7 @@ import { Home } from 'lucide-angular';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterDonationComponent } from './pages/registerdonation/registerdonation.component';
 import { AuthCallbackComponent } from './pages/auth-callback/auth-callback.component';
+import { Oauth2RedirectComponent } from './components/oauth2-redirect.component';
 
 export const routes: Routes = [
     {
@@ -18,7 +19,8 @@ export const routes: Routes = [
             { path: 'blood-type', component: BloodTypeComponent },
             { path: 'home', component: HomeComponent, data: { title: 'Trang chủ', icon: Home } },
             { path: 'register-donation', component: RegisterDonationComponent },
-            { path: 'auth/google/callback', component: AuthCallbackComponent }
+            { path: 'auth/google/callback', component: AuthCallbackComponent },
+            { path: 'login/success', component: Oauth2RedirectComponent }
         ]
     }
 ];

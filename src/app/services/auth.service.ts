@@ -1,30 +1,46 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class AuthService {
-    private apiBaseUrl = "http://localhost:8080/oauth2/authorization";
 
-    constructor(private http: HttpClient) { }
+    private TOKEN_KEY = 'access_token';
+    private REFRESH_TOKEN_KEY = 'refresh_token';
+    private USER_KEY = 'auth_user';
 
-    // Corrected function name and parameter usage
-    authenticate(loginType: 'facebook' | 'google'): Observable<string> {
-        debugger
-        return this.http.get(
-            `${this.apiBaseUrl}/${loginType}`,
-            { responseType: 'text' }
-        );
+    saveToken(token: string): void {
+        localStorage.setItem(this.TOKEN_KEY, token);
     }
 
-    exchangeCodeForToken(code: string, loginType: 'facebook' | 'google'): Observable<any> {
-        const params = new HttpParams()
-            .set('code', code)
-            .set('login_type', loginType);
+    getToken(): string | null {
+        return localStorage.getItem(this.TOKEN_KEY);
+    }
 
-        return this.http.get<any>(`${this.apiBaseUrl}/users/auth/social/callback`, { params });
+    saveRefreshToken(token: string): void {
+        localStorage.setItem(this.REFRESH_TOKEN_KEY, token);
+    }
+
+    getRefreshToken(): string | null {
+        return localStorage.getItem(this.REFRESH_TOKEN_KEY);
+    }
+
+    setUser(user: any): void {
+        localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    }
+
+    getUser(): any {
+        const data = localStorage.getItem(this.USER_KEY);
+        return data ? JSON.parse(data) : null;
+    }
+
+    logout(): void {
+        localStorage.removeItem(this.TOKEN_KEY);
+        localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+        localStorage.removeItem(this.USER_KEY);
+    }
+
+    isAuthenticated(): boolean {
+        return !!this.getToken();
     }
 }

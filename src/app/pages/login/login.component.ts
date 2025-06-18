@@ -26,6 +26,23 @@ export class LoginComponent {
 
   ngOnInit(): void {
     // If any initialization is required, it can go here
+    window.addEventListener('message', (event) => {
+      if (event.origin !== 'http://localhost:8080') {
+        console.warn('Blocked message from untrusted origin:', event.origin);
+        return;
+      }
+
+      const data = event.data;
+      if (data?.accessToken) {
+        this.authService.saveToken(data.accessToken);
+        this.authService.saveRefreshToken(data.refreshToken);
+        this.authService.setUser(data.user);
+
+        this.router.navigate(['home']);
+      } else {
+        console.error('Không nhận được accessToken từ Google login');
+      }
+    });
   }
 
   onSubmit(loginForm: NgForm) {
@@ -45,7 +62,7 @@ export class LoginComponent {
           return;
         }
         console.log('Login successful:', response);
-        this.router.navigate(['/']); // Navigate to the dashboard or another page on successful login
+        this.router.navigate(['home']); // Navigate to the dashboard or another page on successful login
       },
       error => {
         console.log("Login failed", error);
@@ -54,9 +71,16 @@ export class LoginComponent {
     );
   }
 
-  loginWithGoogle(): void {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  loginWithGoogle() {
+    const popup = window.open(
+      'http://localhost:8080/oauth2/authorization/google',
+      '_blank',
+      'width=500,height=600'
+    )
   }
+
+
+
 
   showPassword: boolean = false;
   togglePasswordVisibility(): void {
