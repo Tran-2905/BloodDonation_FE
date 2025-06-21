@@ -251,3 +251,15 @@ body {
         padding: 2rem;
     }
 }
+
+.custom-toast.toast-success {
+    background: linear-gradient(90deg, #e8f5e9 0%, #c8e6c9 100%);
+    color: #222;
+    border-left: 6px solid #43a047;
+}
+
+.custom-toast.toast-error {
+    background: linear-gradient(90deg, #ffebee 0%, #ffcdd2 100%);
+    color: #222;
+    border-left: 6px solid #e53935;
+}

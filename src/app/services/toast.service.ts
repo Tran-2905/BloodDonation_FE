@@ -13,15 +13,14 @@ export class ToastService {
         title?: string,
         delay?: number
     }) {
-        // Xác định message và màu sắc
+        // Xác định message, màu sắc, icon
         let message = defaultMessage;
-        let toastClass = 'bg-danger'; // Mặc định cho lỗi
-
-        if (!error) {
-            toastClass = 'bg-success'; // Thành công
-        }
+        let toastClass = 'toast-success';
+        let icon = '✅';
 
         if (error) {
+            toastClass = 'toast-error';
+            icon = '❌';
             if (error.error && error.error.message) {
                 message = error.error.message;
             } else if (typeof error === 'string') {
@@ -35,45 +34,61 @@ export class ToastService {
             toastContainer = document.createElement('div');
             toastContainer.id = 'toast-container';
             toastContainer.style.position = 'fixed';
-            toastContainer.style.top = '20px';
-            toastContainer.style.right = '20px';
+            toastContainer.style.top = '24px';
+            toastContainer.style.right = '24px';
             toastContainer.style.zIndex = '9999';
+            toastContainer.style.display = 'flex';
+            toastContainer.style.flexDirection = 'column';
+            toastContainer.style.alignItems = 'flex-end';
             document.body.appendChild(toastContainer);
         }
 
         // Tạo toast element
         const toast = document.createElement('div');
-        toast.classList.add('toast', 'show', toastClass, 'text-white');
-        toast.style.minWidth = '300px';
+        toast.classList.add('custom-toast', toastClass);
+        toast.style.minWidth = '320px';
         toast.style.marginBottom = '1rem';
-        toast.style.borderRadius = '4px';
-        toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        toast.style.borderRadius = '12px';
+        toast.style.boxShadow = '0 4px 24px rgba(0,0,0,0.12)';
+        toast.style.fontFamily = 'Inter, Roboto, Arial, sans-serif';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        toast.style.transition = 'opacity 0.3s, transform 0.3s';
 
         // Nội dung toast
         toast.innerHTML = `
-      <div class="toast-header" style="display: flex; justify-content: space-between; align-items: center; padding: 12px">
-        <strong>${title}</strong>
-        <button type="button" class="close-btn" style="background: none; border: none; color: white; cursor: pointer">
-          &times;
-        </button>
-      </div>
-      <div class="toast-body" style="padding: 12px">
-        ${message}
-      </div>
-    `;
+          <div style="display: flex; align-items: center; gap: 12px; padding: 16px 20px 10px 20px;">
+            <span style="font-size: 1.6rem;">${icon}</span>
+            <div>
+              <div style="font-weight: 700; font-size: 1.08rem; margin-bottom: 2px;">${title}</div>
+              <div style="font-size: 1rem; color: #222;">${message}</div>
+            </div>
+            <button type="button" class="close-btn" style="margin-left:auto; background: none; border: none; color: #888; font-size: 1.3rem; cursor: pointer;">&times;</button>
+          </div>
+        `;
 
         // Thêm vào container
         toastContainer.appendChild(toast);
 
+        // Hiệu ứng hiện lên
+        setTimeout(() => {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        }, 10);
+
         // Tự động ẩn sau delay
         const timeoutId = setTimeout(() => {
-            toast.remove();
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
         }, delay);
 
         // Xử lý đóng manual
         toast.querySelector('.close-btn')?.addEventListener('click', () => {
             clearTimeout(timeoutId);
-            toast.remove();
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
         });
     }
 }

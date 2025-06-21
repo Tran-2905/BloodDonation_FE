@@ -31,7 +31,8 @@
         gap: 12px;
 
         .login,
-        .register {
+        .register,
+        .logout {
             padding: 6px 18px;
             border: none;
             border-radius: 4px;
@@ -45,7 +46,8 @@
             border: 1px solid #d32f2f;
         }
 
-        .register {
+        .register,
+        .logout {
             background: #d32f2f;
             color: #fff;
         }

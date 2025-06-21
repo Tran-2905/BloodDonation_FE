@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { userService } from '../../services/user-service';
 import { instanceToPlain } from 'class-transformer';
-import { UserLogin } from '../../models/UserLogin';
+import { UserLogin } from '../../dtos/UserLogin';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
@@ -18,7 +18,7 @@ import { ToastService } from '../../services/toast.service';
 })
 export class LoginComponent {
   @ViewChild('loginForm') loginForm!: NgForm;
-  phoneNumber: string = '';
+  email: string = '';
   password: string = '';
   loginError: string | null = null;
   datasource = Observable<UserLogin>
@@ -38,7 +38,7 @@ export class LoginComponent {
         this.authService.saveRefreshToken(data.refreshToken);
         this.authService.setUser(data.user);
 
-        this.router.navigate(['home']);
+        this.router.navigate(['']);
       } else {
         console.error('Không nhận được accessToken từ Google login');
       }
@@ -50,7 +50,7 @@ export class LoginComponent {
       return;  // If the form is invalid, return
     }
 
-    const user = new UserLogin(this.phoneNumber, this.password);
+    const user = new UserLogin(this.email, this.password);
 
     const payload = instanceToPlain(user);
 
@@ -61,12 +61,34 @@ export class LoginComponent {
           this.loginError = 'Login failed. Please check your credentials and try again.';
           return;
         }
+        // Lưu token vào localStorage
+        this.authService.saveToken(response.token);
+
+        // Nếu có refreshToken, lưu luôn
+        if (response.refreshToken) {
+          this.authService.saveRefreshToken(response.refreshToken);
+        }
+        // Nếu có user, lưu luôn
+        if (response.user) {
+          this.authService.setUser(response.user);
+        }
         console.log('Login successful:', response);
-        this.router.navigate(['home']); // Navigate to the dashboard or another page on successful login
+        this.toastService.showToast({
+          defaultMsg: 'Đăng nhập thành công!',
+          title: 'Thành công',
+          delay: 4000
+        });
+        this.router.navigate(['']); // Navigate to the dashboard or another page on successful login
       },
       error => {
         console.log("Login failed", error);
         this.loginError = 'Login failed. Please check your credentials and try again.';
+        this.toastService.showToast({
+          error,
+          defaultMsg: 'Đăng nhập thất bại!',
+          title: 'Lỗi',
+          delay: 4000
+        });
       }
     );
   }
@@ -78,9 +100,6 @@ export class LoginComponent {
       'width=500,height=600'
     )
   }
-
-
-
 
   showPassword: boolean = false;
   togglePasswordVisibility(): void {

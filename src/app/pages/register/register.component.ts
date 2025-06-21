@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { BloodService } from '../../services/blood-service';
-import { BloodType } from '../../models/bloodType';
+import { BloodType } from '../../models/blood.type';
 import { User } from '../../models/user';
 import { registerDto } from '../../dtos/register.dto';
 import { userService } from '../../services/user-service';
@@ -42,7 +42,6 @@ export class RegisterComponent implements OnInit {
     this.fetchAllBloodTypes();
 
   }
-
 
   fetchAllBloodTypes() {
     this._bloodService.fetchAllBloodTypes().subscribe(
