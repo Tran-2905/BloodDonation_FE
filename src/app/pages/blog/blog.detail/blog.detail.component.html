@@ -1,0 +1,14 @@
+<section class="blog-detail-section" *ngIf="post">
+    <div class="container">
+        <div class="blog-detail-card">
+            <img [src]="post.image" alt="blog" class="blog-detail-img" />
+            <h2 class="blog-detail-title">{{ post.title }}</h2>
+            <div class="blog-detail-meta">
+                <span><i class="bi bi-person"></i> {{ post.author }}</span>
+                <span><i class="bi bi-calendar"></i> {{ post.date }}</span>
+            </div>
+            <div class="blog-detail-content" [innerHTML]="post.content"></div>
+            <a routerLink="/blog" class="back-link"><i class="bi bi-arrow-left"></i> Quay lại Blog</a>
+        </div>
+    </div>
+</section>

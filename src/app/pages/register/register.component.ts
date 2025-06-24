@@ -3,11 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { BloodService } from '../../services/blood-service';
-import { BloodType } from '../../models/blood.type';
 import { User } from '../../models/user';
 import { registerDto } from '../../dtos/register.dto';
 import { userService } from '../../services/user-service';
 import { instanceToPlain } from 'class-transformer';
+import { BloodTypeResponse } from '../../responses/blood.response';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,7 @@ import { instanceToPlain } from 'class-transformer';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  bloodTypes: BloodType[] = [];
+  bloodTypes: BloodTypeResponse[] = [];
   constructor(private router: Router, private _userService: userService, private _bloodService: BloodService, private fb: FormBuilder) { }
 
 
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
 
   fetchAllBloodTypes() {
     this._bloodService.fetchAllBloodTypes().subscribe(
-      (response: BloodType[]) => {
+      (response: BloodTypeResponse[]) => {
         this.bloodTypes = response;
         console.log('Blood Types:', this.bloodTypes);
       },

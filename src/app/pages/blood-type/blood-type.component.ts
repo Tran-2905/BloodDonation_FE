@@ -1,101 +1,122 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule, Droplet, Users, Clock, AlertCircle } from 'lucide-angular';
-import { DataService } from '../../services/data';
+import { LucideAngularModule } from 'lucide-angular';
 import { FormsModule } from '@angular/forms';
 import { BloodService } from '../../services/blood-service';
-
-export type BloodType = 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+import { BloodCapacityResponse, BloodComponentResponse, BloodTypeResponse } from '../../responses/blood.response';
+import { BloodComponents } from '../../models/blood.component';
 
 @Component({
   selector: 'app-blood-type',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule,
-    FormsModule],
+  imports: [CommonModule, RouterModule, LucideAngularModule, FormsModule],
   templateUrl: './blood-type.component.html',
   styleUrls: ['./blood-type.component.scss']
 })
-export class BloodTypeComponent {
+export class BloodTypeComponent implements OnInit {
   activeTab: string = 'compatibility';
   compatibilitySubTab: 'whole' | 'components' = 'whole';
 
-  bloodType: BloodType[] = [];
+  // Dữ liệu từ API
+  bloodTypes: BloodTypeResponse[] = [];
+  bloodComponents: BloodComponents[] = [];
+  bloodCapacity!: BloodCapacityResponse;
+
+  wholeBloodInfo: { type: string; canDonateTo: string[], canReceiveFrom: string[] } = { type: "", canDonateTo: [], canReceiveFrom: [] }
+  // Whole Blood
+  selectedWholeBloodType: string = '';
+  // Component Compatibility
+  selectedBloodType: string = '';
+  selectedComponent: number | null = null;
+  compatibility: { canDonateTo: string[]; canReceiveFrom: string[] } = { canDonateTo: [], canReceiveFrom: [] };
+
   constructor(private _bloodService: BloodService) { }
 
+  ngOnInit(): void {
+    this.fetchAllBloodTypes();
+    this.fetchAllBloodComponent();
+  }
 
-  bloodTypes = [
-    { type: 'O-' }, { type: 'O+' }, { type: 'A-' }, { type: 'A+' },
-    { type: 'B-' }, { type: 'B+' }, { type: 'AB-' }, { type: 'AB+' }
-  ];
+  fetchAllBloodTypes() {
+    this._bloodService.fetchAllBloodTypes().subscribe({
+      next: (response: BloodTypeResponse[]) => {
+        this.bloodTypes = response;
+        if (this.bloodTypes.length) {
+          // Whole Blood mặc định
+          this.selectedWholeBloodType = this.bloodTypes[0].bloodType;
+          this.onWholeBloodTypeChange();
+          // Component compatibility mặc định
+          this.selectedBloodType = this.bloodTypes[0].bloodType;
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching blood types:', error);
+      }
+    });
+  }
 
-  compatibilityChart = [
-    { type: 'O-', compatibility: [true, true, true, true, true, true, true, true] },
-    { type: 'O+', compatibility: [false, true, false, true, false, true, false, true] },
-    { type: 'A-', compatibility: [false, false, true, true, false, false, true, true] },
-    { type: 'A+', compatibility: [false, false, false, true, false, false, false, true] },
-    { type: 'B-', compatibility: [false, false, false, false, true, true, true, true] },
-    { type: 'B+', compatibility: [false, false, false, false, false, true, false, true] },
-    { type: 'AB-', compatibility: [false, false, false, false, false, false, true, true] },
-    { type: 'AB+', compatibility: [false, false, false, false, false, false, false, true] }
-  ];
+  fetchAllBloodComponent() {
+    this._bloodService.fetchAllBloodComponent().subscribe({
+      next: (data: BloodComponents[]) => {
+        this.bloodComponents = data;
+        if (this.bloodComponents.length && this.selectedComponent === null) {
+          this.selectedComponent = this.bloodComponents[0].id;
+          this.onComponentSelectorChange();
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching blood components:', err);
+      }
+    });
+  }
 
-  // Whole blood compatibility logic
-  wholeBloodCompatibility: { [key in BloodType]: { canDonateTo: BloodType[]; canReceiveFrom: BloodType[] } } = {
-    'A+': { canDonateTo: ['A+', 'AB+'], canReceiveFrom: ['A+', 'A-', 'O+', 'O-'] },
-    'A-': { canDonateTo: ['A+', 'A-', 'AB+', 'AB-'], canReceiveFrom: ['A-', 'O-'] },
-    'B+': { canDonateTo: ['B+', 'AB+'], canReceiveFrom: ['B+', 'B-', 'O+', 'O-'] },
-    'B-': { canDonateTo: ['B+', 'B-', 'AB+', 'AB-'], canReceiveFrom: ['B-', 'O-'] },
-    'AB+': { canDonateTo: ['AB+'], canReceiveFrom: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] },
-    'AB-': { canDonateTo: ['AB+', 'AB-'], canReceiveFrom: ['A-', 'B-', 'AB-', 'O-'] },
-    'O+': { canDonateTo: ['A+', 'B+', 'AB+', 'O+'], canReceiveFrom: ['O+', 'O-'] },
-    'O-': { canDonateTo: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], canReceiveFrom: ['O-'] },
-  };
-
-  // Blood component compatibility logic
-  bloodComponents = ['Red Blood Cells', 'Plasma', 'Platelets'];
-  selectedBloodType: BloodType = 'A+';
-  selectedComponent: string = 'Red Blood Cells';
-
-  bloodCompatibility: { [key in BloodType]: { canDonateTo: BloodType[]; canReceiveFrom: BloodType[] } } = this.wholeBloodCompatibility;
-
-  plasmaCompatibility: { [key in BloodType]: { canDonateTo: BloodType[]; canReceiveFrom: BloodType[] } } = {
-    'A+': { canDonateTo: ['A+', 'A-', 'O+', 'O-'], canReceiveFrom: ['A+', 'AB+'] },
-    'A-': { canDonateTo: ['A-', 'O-'], canReceiveFrom: ['A+', 'A-', 'AB+', 'AB-'] },
-    'B+': { canDonateTo: ['B+', 'B-', 'O+', 'O-'], canReceiveFrom: ['B+', 'AB+'] },
-    'B-': { canDonateTo: ['B-', 'O-'], canReceiveFrom: ['B+', 'B-', 'AB+', 'AB-'] },
-    'AB+': { canDonateTo: ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'], canReceiveFrom: ['AB+'] },
-    'AB-': { canDonateTo: ['A-', 'B-', 'O-', 'AB-'], canReceiveFrom: ['AB+', 'AB-'] },
-    'O+': { canDonateTo: ['O+', 'O-'], canReceiveFrom: ['O+', 'A+', 'B+', 'AB+'] },
-    'O-': { canDonateTo: ['O-'], canReceiveFrom: ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'] },
-  };
-
-  plateletCompatibility: { [key in BloodType]: { canDonateTo: BloodType[]; canReceiveFrom: BloodType[] } } = {
-    'A+': { canDonateTo: ['A+', 'AB+'], canReceiveFrom: ['A+', 'A-', 'O+', 'O-'] },
-    'A-': { canDonateTo: ['A+', 'A-', 'AB+', 'AB-'], canReceiveFrom: ['A-', 'O-'] },
-    'B+': { canDonateTo: ['B+', 'AB+'], canReceiveFrom: ['B+', 'B-', 'O+', 'O-'] },
-    'B-': { canDonateTo: ['B+', 'B-', 'AB+', 'AB-'], canReceiveFrom: ['B-', 'O-'] },
-    'AB+': { canDonateTo: ['AB+'], canReceiveFrom: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] },
-    'AB-': { canDonateTo: ['AB+', 'AB-'], canReceiveFrom: ['A-', 'B-', 'AB-', 'O-'] },
-    'O+': { canDonateTo: ['A+', 'B+', 'AB+', 'O+'], canReceiveFrom: ['O+', 'O-'] },
-    'O-': { canDonateTo: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], canReceiveFrom: ['O-'] },
-  };
-
-  get compatibility() {
-    switch (this.selectedComponent) {
-      case 'Plasma': return this.plasmaCompatibility[this.selectedBloodType];
-      case 'Platelets': return this.plateletCompatibility[this.selectedBloodType];
-      default: return this.bloodCompatibility[this.selectedBloodType];
+  // Khi đổi nhóm máu cho Whole Blood
+  onWholeBloodTypeChange() {
+    const selected = this.bloodTypes.find(t => t.bloodType === this.selectedWholeBloodType);
+    if (selected) {
+      this._bloodService.fetchAllBloodCapacity(selected.bloodTypeId, 1).subscribe({
+        next: (data: any) => {
+          if (data && data.canDonateTo && data.canReceiveFrom) {
+            this.wholeBloodInfo = {
+              type: data.type,
+              canDonateTo: data.canDonateTo,
+              canReceiveFrom: data.canReceiveFrom
+            };
+          } else {
+            this.wholeBloodInfo = { type: '', canDonateTo: [], canReceiveFrom: [] };
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.wholeBloodInfo = { type: '', canDonateTo: [], canReceiveFrom: [] };
+        }
+      });
     }
   }
 
-  // For Whole Blood tab
-  selectedWholeBloodType: BloodType = 'A+';
-  get wholeBloodInfo() {
-    return this.wholeBloodCompatibility[this.selectedWholeBloodType];
+  // Khi đổi nhóm máu hoặc component cho phần thành phần máu
+  onComponentSelectorChange() {
+    const selectedType = this.bloodTypes.find(t => t.bloodType === this.selectedBloodType);
+    if (selectedType && this.selectedComponent !== null) {
+      this._bloodService.fetchAllBloodCapacity(selectedType.bloodTypeId, this.selectedComponent).subscribe({
+        next: (data: any) => {
+          if (data && data.canDonateTo && data.canReceiveFrom) {
+            this.compatibility = {
+              canDonateTo: data.canDonateTo,
+              canReceiveFrom: data.canReceiveFrom
+            };
+          } else {
+            this.compatibility = { canDonateTo: [], canReceiveFrom: [] };
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.compatibility = { canDonateTo: [], canReceiveFrom: [] };
+        }
+      });
+    }
   }
-
-  // Blood type info for tab "Blood Types"
   bloodTypeInfos = [
     {
       type: 'O-',

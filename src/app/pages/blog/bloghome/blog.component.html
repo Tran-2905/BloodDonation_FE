@@ -1,0 +1,56 @@
+<section class="blog-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Blog Hiến Máu</h2>
+            <p class="section-subtitle">Tin tức, chia sẻ và kiến thức về hiến máu</p>
+        </div>
+        <div class="row">
+            <!-- Main Blog List -->
+            <div class="col-lg-8">
+                <div class="blog-list">
+                    <div class="blog-card" *ngFor="let post of blogPosts">
+                        <div class="blog-thumb">
+                            <img [src]="post.image" alt="blog" />
+                        </div>
+                        <div class="blog-content">
+                            <h5 class="blog-title">{{ post.title }}</h5>
+                            <div class="blog-meta">
+                                <span><i class="bi bi-person"></i> {{ post.author }}</span>
+                                <span><i class="bi bi-calendar"></i> {{ post.date }}</span>
+                            </div>
+                            <p class="blog-desc">{{ post.summary }}</p>
+                            <a [routerLink]="['/blog', post.id]" class="read-more">Đọc tiếp <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <div class="sidebar-widget">
+                        <h6>Tìm kiếm</h6>
+                        <input type="text" class="form-control" placeholder="Tìm bài viết..."
+                            [(ngModel)]="searchTerm" />
+                    </div>
+                    <div class="sidebar-widget">
+                        <h6>Danh mục</h6>
+                        <ul class="category-list">
+                            <li *ngFor="let cat of categories">
+                                <a href="#" (click)="filterByCategory(cat)">{{ cat }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h6>Bài viết nổi bật</h6>
+                        <ul class="featured-list">
+                            <li *ngFor="let post of featuredPosts">
+                                <a [routerLink]="['/blog', post.id]">{{ post.title }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

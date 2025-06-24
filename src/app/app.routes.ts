@@ -7,6 +7,8 @@ import { Home } from 'lucide-angular';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterDonationComponent } from './pages/registerdonation/registerdonation.component';
 import { Oauth2RedirectComponent } from './components/oauth2-redirect.component';
+import { BlogDetailComponent } from './pages/blog/blog.detail/blog.detail.component';
+import { BlogComponent } from './pages/blog/bloghome/blog.component';
 
 export const routes: Routes = [
     {
@@ -18,7 +20,9 @@ export const routes: Routes = [
             { path: 'blood-type', component: BloodTypeComponent },
             { path: '', component: HomeComponent, data: { title: 'Trang chủ', icon: Home } },
             { path: 'register-donate', component: RegisterDonationComponent },
-            { path: 'login/success', component: Oauth2RedirectComponent }
+            { path: 'login/success', component: Oauth2RedirectComponent },
+            { path: 'blog', component: BlogComponent },
+            { path: 'blog/:id', component: BlogDetailComponent },
         ]
     }
 ];

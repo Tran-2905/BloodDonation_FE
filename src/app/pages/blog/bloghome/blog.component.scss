@@ -1,0 +1,114 @@
+.blog-section {
+    padding: 3rem 0 4rem 0;
+    background: #fafbfc;
+
+    .section-header {
+        margin-bottom: 2.5rem;
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            color: #888;
+        }
+    }
+
+    .blog-list {
+        .blog-card {
+            display: flex;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+            overflow: hidden;
+
+            .blog-thumb img {
+                width: 180px;
+                height: 140px;
+                object-fit: cover;
+            }
+
+            .blog-content {
+                padding: 1.2rem 1.5rem;
+                flex: 1;
+
+                .blog-title {
+                    font-size: 1.18rem;
+                    font-weight: 700;
+                    margin-bottom: 0.5rem;
+                }
+
+                .blog-meta {
+                    font-size: 0.97rem;
+                    color: #888;
+                    margin-bottom: 0.7rem;
+
+                    span {
+                        margin-right: 1.2rem;
+                    }
+                }
+
+                .blog-desc {
+                    color: #444;
+                    margin-bottom: 0.7rem;
+                }
+
+                .read-more {
+                    color: #2962ff;
+                    font-weight: 600;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    .blog-sidebar {
+        .sidebar-widget {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            padding: 1.2rem 1.1rem;
+            margin-bottom: 1.5rem;
+
+            h6 {
+                font-size: 1.05rem;
+                font-weight: 700;
+                margin-bottom: 0.7rem;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 0.6rem 1rem;
+                border-radius: 8px;
+                border: 1px solid #eee;
+            }
+
+            .category-list,
+            .featured-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                li {
+                    margin-bottom: 0.5rem;
+                }
+
+                a {
+                    color: #2962ff;
+                    text-decoration: none;
+                    font-weight: 500;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

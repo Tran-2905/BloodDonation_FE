@@ -6,8 +6,8 @@ import { DonationRegistration } from '../../models/donation.registration';
 import { Gender } from '../../models/enum';
 import { instanceToPlain } from 'class-transformer';
 import { RequestDonationService } from '../../services/requestdonation.service';
-import { BloodType } from '../../models/blood.type';
 import { BloodService } from '../../services/blood-service';
+import { BloodTypeResponse } from '../../responses/blood.response';
 
 @Component({
   selector: 'app-registerdonation',
@@ -19,7 +19,7 @@ export class RegisterDonationComponent implements OnInit {
 
   constructor(private requestDonationService: RequestDonationService, private router: Router, private _bloodService: BloodService) { };
 
-  bloodTypes: BloodType[] = [];
+  bloodTypes: BloodTypeResponse[] = [];
 
   @ViewChild('donationForm') donationForm: any;
   minDate: Date = new Date();
@@ -49,7 +49,7 @@ export class RegisterDonationComponent implements OnInit {
 
   fetchAllBloodTypes() {
     this._bloodService.fetchAllBloodTypes().subscribe(
-      (response: BloodType[]) => {
+      (response: BloodTypeResponse[]) => {
         this.bloodTypes = response;
         console.log('Blood Types:', this.bloodTypes);
       },

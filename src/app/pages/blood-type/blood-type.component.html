@@ -40,8 +40,8 @@
             <h3>Whole Blood Compatibility</h3>
             <p>Find out which blood types are compatible for whole blood transfusions.</p>
             <label for="wholeBloodSelect" class="select-label">Select Blood Type</label>
-            <select id="wholeBloodSelect" [(ngModel)]="selectedWholeBloodType">
-                <option *ngFor="let type of bloodTypes" [value]="type.type">{{ type.type }}</option>
+            <select id="wholeBloodSelect" [(ngModel)]="selectedWholeBloodType" (change)="onWholeBloodTypeChange()">
+                <option *ngFor="let type of bloodTypes" [value]="type.bloodType">{{ type.bloodType }}</option>
             </select>
             <div class="component-compatibility">
                 <div>
@@ -81,14 +81,15 @@
             <div class="component-selectors">
                 <div>
                     <label for="bloodTypeSelect">Select Blood Type</label>
-                    <select id="bloodTypeSelect" [(ngModel)]="selectedBloodType">
-                        <option *ngFor="let type of bloodTypes" [value]="type.type">{{ type.type }}</option>
+                    <select id="bloodTypeSelect" [(ngModel)]="selectedBloodType" (change)="onComponentSelectorChange()">
+                        <option *ngFor="let type of bloodTypes" [value]="type.bloodType">{{ type.bloodType }}</option>
                     </select>
                 </div>
                 <div>
                     <label for="componentSelect">Select Component</label>
-                    <select id="componentSelect" [(ngModel)]="selectedComponent">
-                        <option *ngFor="let comp of bloodComponents">{{ comp }}</option>
+                    <select id="componentSelect" [(ngModel)]="selectedComponent" (change)="onComponentSelectorChange()">
+                        <option *ngFor="let comp of bloodComponents" [value]="comp.id">{{ comp.componentName }}
+                        </option>
                     </select>
                 </div>
             </div>

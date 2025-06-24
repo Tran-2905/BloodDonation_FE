@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-oauth2-redirect',
-    template: `<p>Đang xử lý đăng nhập...</p>`
+    template: ``
 })
 export class Oauth2RedirectComponent implements OnInit {
     constructor(
