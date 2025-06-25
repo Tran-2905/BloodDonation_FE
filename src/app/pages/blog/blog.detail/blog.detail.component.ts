@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-blog.detail',
+  selector: 'app-blog-detail',
   imports: [CommonModule, RouterModule],
   templateUrl: './blog.detail.component.html',
   styleUrl: './blog.detail.component.scss'

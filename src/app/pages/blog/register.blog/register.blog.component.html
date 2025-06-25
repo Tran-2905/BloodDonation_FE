@@ -1,0 +1,58 @@
+<div class="post-create-container">
+    <h2 class="main-title">Tạo bài viết mới</h2>
+    <form #postForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+            <label for="tittle">Tiêu đề</label>
+            <input id="tittle" name="tittle" class="form-control" [(ngModel)]="post.tittle" required maxlength="255" />
+        </div>
+
+        <div class="form-section">
+            <label for="summary">Tóm tắt</label>
+            <textarea id="summary" name="summary" class="form-control" [(ngModel)]="post.summary" required
+                rows="3"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="content">Nội dung</label>
+            <textarea id="content" name="content" class="form-control" [(ngModel)]="post.content" required
+                rows="8"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="imageUrl">Ảnh bài viết</label>
+            <input id="imageUrl" name="imageUrl" class="form-control" type="file"
+                (change)="onFileChange($event, 'image_url')" accept="image/*" />
+            <div *ngIf="post.image_url" class="preview-img">
+                <img [src]="post.image_url" alt="Preview" />
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label for="author_name">Tên tác giả</label>
+            <input id="author_name" name="author_name" class="form-control" [(ngModel)]="post.author_name" required
+                maxlength="255" />
+        </div>
+
+        <div class="form-section">
+            <label for="designation">Chức danh</label>
+            <input id="designation" name="designation" class="form-control" [(ngModel)]="post.designation"
+                maxlength="255" />
+        </div>
+
+        <div class="form-section">
+            <label for="bio">Giới thiệu</label>
+            <textarea id="bio" name="bio" class="form-control" [(ngModel)]="post.bio" rows="3"></textarea>
+        </div>
+
+        <div class="form-section">
+            <label for="avatarUrl">Ảnh đại diện tác giả</label>
+            <input id="avatarUrl" name="avatarUrl" class="form-control" type="file"
+                (change)="onFileChange($event, 'avatar_url')" accept="image/*" />
+            <div *ngIf="post.avatar_url" class="preview-img">
+                <img [src]="post.avatar_url" alt="Avatar Preview" />
+            </div>
+        </div>
+
+        <button class="btn-gradient" type="submit" [disabled]="!postForm.form.valid">Tạo bài viết</button>
+    </form>
+</div>

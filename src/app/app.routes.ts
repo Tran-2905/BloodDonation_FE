@@ -9,6 +9,8 @@ import { RegisterDonationComponent } from './pages/registerdonation/registerdona
 import { Oauth2RedirectComponent } from './components/oauth2-redirect.component';
 import { BlogDetailComponent } from './pages/blog/blog.detail/blog.detail.component';
 import { BlogComponent } from './pages/blog/bloghome/blog.component';
+import { BlogregisterComponent } from './pages/blog/blogregister/blogregister.component';
+import { RegisterBlogComponent } from './pages/blog/register.blog/register.blog.component';
 
 export const routes: Routes = [
     {
@@ -23,6 +25,7 @@ export const routes: Routes = [
             { path: 'login/success', component: Oauth2RedirectComponent },
             { path: 'blog', component: BlogComponent },
             { path: 'blog/:id', component: BlogDetailComponent },
+            { path: 'blog/register', component: RegisterBlogComponent },
         ]
     }
 ];
