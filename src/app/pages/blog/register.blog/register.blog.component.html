@@ -18,14 +18,16 @@
                 rows="8"></textarea>
         </div>
 
+        <!-- Ảnh bài viết -->
         <div class="form-section">
             <label for="imageUrl">Ảnh bài viết</label>
             <input id="imageUrl" name="imageUrl" class="form-control" type="file"
                 (change)="onFileChange($event, 'image_url')" accept="image/*" />
-            <div *ngIf="post.image_url" class="preview-img">
-                <img [src]="post.image_url" alt="Preview" />
+            <div *ngIf="imagePreview" class="preview-img">
+                <img [src]="imagePreview" alt="Preview" />
             </div>
         </div>
+
 
         <div class="form-section">
             <label for="author_name">Tên tác giả</label>
@@ -44,12 +46,13 @@
             <textarea id="bio" name="bio" class="form-control" [(ngModel)]="post.bio" rows="3"></textarea>
         </div>
 
+        <!-- Ảnh đại diện tác giả -->
         <div class="form-section">
             <label for="avatarUrl">Ảnh đại diện tác giả</label>
             <input id="avatarUrl" name="avatarUrl" class="form-control" type="file"
                 (change)="onFileChange($event, 'avatar_url')" accept="image/*" />
-            <div *ngIf="post.avatar_url" class="preview-img">
-                <img [src]="post.avatar_url" alt="Avatar Preview" />
+            <div *ngIf="avatarPreview" class="preview-img">
+                <img [src]="avatarPreview" alt="Avatar Preview" />
             </div>
         </div>
 

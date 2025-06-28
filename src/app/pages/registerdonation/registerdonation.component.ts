@@ -11,9 +11,9 @@ import { BloodTypeResponse } from '../../responses/blood.response';
 
 @Component({
   selector: 'app-registerdonation',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './registerdonation.component.html',
-  styleUrl: './registerdonation.component.scss'
+  styleUrls: ['./registerdonation.component.scss']
 })
 export class RegisterDonationComponent implements OnInit {
 
