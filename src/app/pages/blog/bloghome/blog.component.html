@@ -37,7 +37,7 @@
                         <h6>Danh mục</h6>
                         <ul class="category-list">
                             <li *ngFor="let cat of categories">
-                                <a href="#" (click)="filterByCategory(cat)">{{ cat }}</a>
+                                <a href="#" (click)="filterByCategory(cat.name)">{{ cat.name }}</a>
                             </li>
                         </ul>
                     </div>

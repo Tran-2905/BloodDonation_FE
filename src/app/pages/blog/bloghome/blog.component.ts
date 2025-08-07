@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PostService } from '../../../services/post.service';
+import { CategoryService } from '../../../services/category.service';
+import { CategoryDto } from '../../../dtos/blog.categories.dto';
 
 @Component({
   selector: 'app-blog',
@@ -10,9 +13,50 @@ import { RouterModule } from '@angular/router';
   styleUrl: './blog.component.scss'
 })
 export class BlogComponent {
+  constructor(private _categoryService: CategoryService) { }
   searchTerm = '';
+  categories: CategoryDto[] = [];
+  category: { id: number; name: string } = { id: 0, name: '' };
+  selectedCategory: number | null = null;
+  ngOnInit() {
+    this.fetchAllCategories();
+  }
+  fetchAllCategories() {
+    this._categoryService.fetchAllCategories().subscribe({
+      next: (data: CategoryDto[]) => {
+        this.categories = data;
+        if (this.categories.length && this.selectedCategory === null) {
+          this.selectedCategory = this.categories[0].id;
+          this.onCategorySelectorChange();
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching categories :', err);
+      }
+    });
+  }
+  onCategorySelectorChange() {
+    const selectedType = this.categories.find(t => t.id === this.selectedCategory);
+    if (selectedType) {
+      this._categoryService.fetchCategoryById(selectedType.id).subscribe({
+        next: (data: CategoryDto) => {
+          if (data && data.name && data.id) {
+            this.category = {
+              id: data.id,
+              name: data.name
+            };
+          } else {
+            this.category = { id: 0, name: '' };
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.category = { id: 0, name: '' };
+        }
+      });
+    }
+  }
 
-  categories = ['Tất cả', 'Kiến thức', 'Câu chuyện', 'Sự kiện'];
   blogPosts = [
     {
       id: 1,
@@ -36,6 +80,8 @@ export class BlogComponent {
     { id: 2, title: 'Câu chuyện cảm động từ người nhận máu' }
   ];
 
-  filterByCategory(cat: string) {
+  filterByCategory(categoryName: string) {
+    this.selectedCategory = this.categories.find(cat => cat.name === categoryName)?.id || null;
+    this.onCategorySelectorChange();
   }
 }
