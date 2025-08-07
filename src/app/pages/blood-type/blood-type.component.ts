@@ -117,6 +117,8 @@ export class BloodTypeComponent implements OnInit {
       });
     }
   }
+
+
   bloodTypeInfos = [
     {
       type: 'O-',

@@ -96,7 +96,7 @@ export class RegisterDonationComponent implements OnInit {
     this.requestDonationService.requestDonation(payload).subscribe(
       response => {
         console.log("successful:", response)
-        this.router.navigate(['home'])
+        this.router.navigate([''])
       },
       error => {
         console.log("send error: ", error)

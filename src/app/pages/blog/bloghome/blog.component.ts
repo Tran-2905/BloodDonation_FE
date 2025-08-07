@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class BlogComponent {
   searchTerm = '';
+
   categories = ['Tất cả', 'Kiến thức', 'Câu chuyện', 'Sự kiện'];
   blogPosts = [
     {
