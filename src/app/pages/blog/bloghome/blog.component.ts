@@ -80,7 +80,8 @@ export class BlogComponent {
     { id: 2, title: 'Câu chuyện cảm động từ người nhận máu' }
   ];
 
-  filterByCategory(categoryName: string) {
+  filterByCategory(categoryName: string, event: Event) {
+    event.preventDefault();
     this.selectedCategory = this.categories.find(cat => cat.name === categoryName)?.id || null;
     this.onCategorySelectorChange();
   }
