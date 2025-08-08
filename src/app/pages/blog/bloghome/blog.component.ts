@@ -6,6 +6,7 @@ import { PostService } from '../../../services/post.service';
 import { CategoryService } from '../../../services/category.service';
 import { CategoryDto } from '../../../dtos/blog.categories.dto';
 import { BlogPost } from '../../../models/blog.post';
+import { blogDTO } from '../../../dtos/blog.dto';
 
 @Component({
   selector: 'app-blog',
@@ -19,7 +20,7 @@ export class BlogComponent {
   categories: CategoryDto[] = [];
   category: { id: number; name: string } = { id: 0, name: '' };
   selectedCategory: number | null = null;
-  blogs: BlogPost[] = [];
+  blogs: blogDTO[] = [];
   ngOnInit() {
     this.fetchAllCategories();
     this.fetchAllPosts();
@@ -40,14 +41,14 @@ export class BlogComponent {
   }
   fetchAllPosts() {
     this._postService.fetchAllPost().subscribe({
-      next: (data: BlogPost[]) => {
+      next: (data: blogDTO[]) => {
         this.blogs = data;
         console.log('Fetched posts:', data);
       },
       error: (err) => {
         console.error('Error fetching posts:', err);
       }
-    })
+    });
   }
   onCategorySelectorChange() {
     const selectedType = this.categories.find(t => t.id === this.selectedCategory);

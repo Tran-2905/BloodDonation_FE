@@ -8,15 +8,15 @@
             <!-- Main Blog List -->
             <div class="col-lg-8">
                 <div class="blog-list">
-                    <div class="blog-card" *ngFor="let post of blogPosts">
+                    <div class="blog-card" *ngFor="let post of blogs">
                         <div class="blog-thumb">
-                            <img [src]="post.image" alt="blog" />
+                            <img [src]="post.image_url" alt="blog" />
                         </div>
                         <div class="blog-content">
                             <h5 class="blog-title">{{ post.title }}</h5>
                             <div class="blog-meta">
-                                <span><i class="bi bi-person"></i> {{ post.author }}</span>
-                                <span><i class="bi bi-calendar"></i> {{ post.date }}</span>
+                                <span><i class="bi bi-person"></i> {{ post.author_name }}</span>
+                                <span><i class="bi bi-calendar"></i> {{ post.approved_at }}</span>
                             </div>
                             <p class="blog-desc">{{ post.summary }}</p>
                             <a [routerLink]="['/blog', post.id]" class="read-more">Đọc tiếp <i

@@ -13,9 +13,7 @@ export class BlogPost {
     approvedAt: Date | null = null;
     createdAt: Date = new Date()
     updatedAt: Date = new Date();
-
     description: String = "";
-
     constructor(init?: Partial<BlogPost>) {
         Object.assign(this, init);
     }

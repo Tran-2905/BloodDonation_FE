@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BlogPost } from "../models/blog.post";
+import { blogDTO } from "../dtos/blog.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class PostService {
     requestPost(request: any): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}/add`, request);
     }
-    fetchAllPost(): Observable<BlogPost[]> {
-        return this.http.get<BlogPost[]>(`${this.baseUrl}/all`);
+    fetchAllPost(): Observable<blogDTO[]> {
+        return this.http.get<blogDTO[]>(`${this.baseUrl}/all`);
     }
 }
