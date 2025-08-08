@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CategoryService } from '../../../services/category.service';
 import { CategoryDto } from '../../../dtos/blog.categories.dto';
+import { BlogPost } from '../../../models/blog.post';
 
 @Component({
   selector: 'app-blog',
@@ -13,13 +14,15 @@ import { CategoryDto } from '../../../dtos/blog.categories.dto';
   styleUrl: './blog.component.scss'
 })
 export class BlogComponent {
-  constructor(private _categoryService: CategoryService) { }
+  constructor(private _categoryService: CategoryService, private _postService: PostService) { }
   searchTerm = '';
   categories: CategoryDto[] = [];
   category: { id: number; name: string } = { id: 0, name: '' };
   selectedCategory: number | null = null;
+  blogs: BlogPost[] = [];
   ngOnInit() {
     this.fetchAllCategories();
+    this.fetchAllPosts();
   }
   fetchAllCategories() {
     this._categoryService.fetchAllCategories().subscribe({
@@ -34,6 +37,17 @@ export class BlogComponent {
         console.error('Error fetching categories :', err);
       }
     });
+  }
+  fetchAllPosts() {
+    this._postService.fetchAllPost().subscribe({
+      next: (data: BlogPost[]) => {
+        this.blogs = data;
+        console.log('Fetched posts:', data);
+      },
+      error: (err) => {
+        console.error('Error fetching posts:', err);
+      }
+    })
   }
   onCategorySelectorChange() {
     const selectedType = this.categories.find(t => t.id === this.selectedCategory);
@@ -75,6 +89,8 @@ export class BlogComponent {
       summary: 'Một giọt máu cho đi, một cuộc đời ở lại. Đọc câu chuyện về bé Minh được cứu sống nhờ cộng đồng hiến máu...'
     },
   ];
+
+
   featuredPosts = [
     { id: 1, title: 'Lợi ích sức khỏe khi hiến máu định kỳ' },
     { id: 2, title: 'Câu chuyện cảm động từ người nhận máu' }

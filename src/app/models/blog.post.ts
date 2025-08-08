@@ -1,4 +1,4 @@
-export class BlogComponent {
+export class BlogPost {
     postId: number = 1;
     title: string = '';
     slug: string = '';
@@ -16,7 +16,7 @@ export class BlogComponent {
 
     description: String = "";
 
-    constructor(init?: Partial<BlogComponent>) {
+    constructor(init?: Partial<BlogPost>) {
         Object.assign(this, init);
     }
 }
