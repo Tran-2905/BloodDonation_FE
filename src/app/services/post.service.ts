@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { BlogPost } from "../models/blog.post";
 import { blogDTO } from "../dtos/blog.dto";
 
 @Injectable({
@@ -15,5 +14,8 @@ export class PostService {
     }
     fetchAllPost(): Observable<blogDTO[]> {
         return this.http.get<blogDTO[]>(`${this.baseUrl}/all`);
+    }
+    fetchPostById(id: number): Observable<blogDTO> {
+        return this.http.get<blogDTO>(`${this.baseUrl}/${id}`);
     }
 }

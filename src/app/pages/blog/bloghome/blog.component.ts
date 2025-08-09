@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CategoryService } from '../../../services/category.service';
 import { CategoryDto } from '../../../dtos/blog.categories.dto';
-import { BlogPost } from '../../../models/blog.post';
 import { blogDTO } from '../../../dtos/blog.dto';
 
 @Component({
