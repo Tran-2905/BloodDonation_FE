@@ -5,7 +5,12 @@
             <label for="tittle">Tiêu đề</label>
             <input id="tittle" name="tittle" class="form-control" [(ngModel)]="post.tittle" required maxlength="255" />
         </div>
-
+        <div class="form-section">
+            <label for="category_id">Danh mục</label>
+            <select id="category_id" name="category_id" class="form-control" [(ngModel)]="post.category_id" required>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
         <div class="form-section">
             <label for="summary">Tóm tắt</label>
             <textarea id="summary" name="summary" class="form-control" [(ngModel)]="post.summary" required

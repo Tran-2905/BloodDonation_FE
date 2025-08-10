@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Route, Router, RouterModule } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CloudSnow } from 'lucide-angular';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-register-blog',
@@ -14,7 +15,7 @@ import { CloudSnow } from 'lucide-angular';
 })
 
 export class RegisterBlogComponent {
-  constructor(private postService: PostService, private router: Router) { };
+  constructor(private postService: PostService, private router: Router, private categoryService: CategoryService) { };
   post: any = {
     tittle: '',
     summary: '',
@@ -22,13 +23,15 @@ export class RegisterBlogComponent {
     author_name: '',
     designation: '',
     bio: '',
+    category_id: ''
   };
+
 
   imageFile: File | null = null;
   avatarFile: File | null = null;
   imagePreview: string | null = null;
   avatarPreview: string | null = null;
-
+  categories: any[] = [];
   // Xử lý upload file, demo dùng local URL, thực tế bạn nên upload lên server và lấy URL trả về
   // onFileChange(event: any, field: 'image_url' | 'avatar_url') {
   //   const file = event.target.files[0];
@@ -57,6 +60,28 @@ export class RegisterBlogComponent {
         reader.readAsDataURL(file);
       }
     }
+  }
+
+
+
+  getAllCategories() {
+    this.categoryService.fetchAllCategories().subscribe({
+      next: data => {
+        this.categories = data;
+      },
+      error: error => {
+        this.handleError(error);
+      }
+    });
+  }
+
+  onCategoryChange(event: any) {
+    const selectedCategoryId = event.target.value;
+    this.post.category_id = selectedCategoryId;
+  }
+
+  ngOnInit() {
+    this.getAllCategories();
   }
 
   onSubmit() {
