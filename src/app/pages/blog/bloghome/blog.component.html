@@ -9,17 +9,17 @@
             <div class="col-lg-8">
                 <div class="blog-list">
                     <div class="blog-card" *ngFor="let blog of blogs">
-                        <div class="blog-thumb">
+                        <!-- <div class="blog-thumb">
                             <img [src]="blog.image_url" alt="blog" />
-                        </div>
+                        </div> -->
                         <div class="blog-content">
                             <h5 class="blog-title">{{ blog.title }}</h5>
                             <div class="blog-meta">
                                 <span><i class="bi bi-person"></i> {{ blog.author_name }}</span>
                                 <span><i class="bi bi-calendar"></i> {{ blog.approved_at }}</span>
                             </div>
-                            <p class="blog-desc">{{ post.summary }}</p>
-                            <a [routerLink]="['/blog', post.id]" class="read-more">Đọc tiếp <i
+                            <p class="blog-desc">{{ blog.summary }}</p>
+                            <a [routerLink]="['/blog', blog.id]" class="read-more">Đọc tiếp <i
                                     class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>

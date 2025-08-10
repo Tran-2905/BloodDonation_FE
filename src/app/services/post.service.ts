@@ -13,7 +13,12 @@ export class PostService {
         return this.http.post<any>(`${this.baseUrl}/add`, request);
     }
     fetchAllPost(): Observable<blogDTO[]> {
-        return this.http.get<blogDTO[]>(`${this.baseUrl}/all`);
+        return this.http.get<blogDTO[]>(`${this.baseUrl}/all`).pipe(
+            map(posts => posts.map(post => ({
+                ...post,
+                image_url: `${this.baseUrl}/${post.id}/image`
+            })))
+        );
     }
     fetchPostById(id: number): Observable<blogDTO> {
         return this.http.get<blogDTO>(`${this.baseUrl}/${id}`).pipe(
