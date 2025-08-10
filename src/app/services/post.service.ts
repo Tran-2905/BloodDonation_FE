@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { blogDTO } from "../dtos/blog.dto";
 
 @Injectable({
@@ -16,6 +16,12 @@ export class PostService {
         return this.http.get<blogDTO[]>(`${this.baseUrl}/all`);
     }
     fetchPostById(id: number): Observable<blogDTO> {
-        return this.http.get<blogDTO>(`${this.baseUrl}/${id}`);
+        return this.http.get<blogDTO>(`${this.baseUrl}/${id}`).pipe(
+            map(post => ({
+                ...post,
+                // Add any additional mapping logic here if needed
+                image_url: `${this.baseUrl}/${post.id}/image`
+            }))
+        );
     }
 }
