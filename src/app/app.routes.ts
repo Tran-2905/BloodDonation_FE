@@ -11,6 +11,7 @@ import { BlogDetailComponent } from './pages/blog/blog.detail/blog.detail.compon
 import { BlogComponent } from './pages/blog/bloghome/blog.component';
 import { RegisterBlogComponent } from './pages/blog/register.blog/register.blog.component';
 import { DashboardMemberComponent } from './pages/dashboard.member/dashboard.member.component';
+import { UserProfileComponent } from './pages/user.profile/user.profile.component';
 
 export const routes: Routes = [
     {
@@ -26,7 +27,8 @@ export const routes: Routes = [
             { path: 'blog', component: BlogComponent },
             { path: 'blog/:id', component: BlogDetailComponent },
             { path: 'blog-register', component: RegisterBlogComponent },
-            { path: 'dashboard', component: DashboardMemberComponent }
+            { path: 'dashboard', component: DashboardMemberComponent },
+            { path: 'user-profile', component: UserProfileComponent }
         ]
     }
 ];
