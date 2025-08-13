@@ -1,26 +1,47 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserProfileService } from '../../services/user.profile.service';
+import { UserProfile } from '../../responses/user.profile.response';
 
 @Component({
   selector: 'app-user.profile',
   imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './user.profile.component.html',
-  styleUrl: './user.profile.component.scss'
+  styleUrls: ['./user.profile.component.scss'],
+  standalone: true
 })
-export class UserProfileComponent {
-  user = {
-    fullName: 'John Doe',
-    email: 'johndoe@email.com',
-    bloodType: 'A+',
-    lastDonation: 'June 15, 2023',
-    memberSince: 'January 2023',
-    phone: '0123 456 789',
-    dob: '1990-05-13',
-    address: '123 Main St, City',
-    conditions: 'None',
-    medications: 'None'
+export class UserProfileComponent implements OnInit {
+
+
+  user: UserProfile = {
+    fullName: '',
+    email: '',
+    bloodType: '',
+    lastDonation: null,
+    memberSince: null,
+    phone: '',
+    dob: '',
+    address: '',
+    conditions: null,
+    medications: null
   };
+  constructor(private userProfileService: UserProfileService) { }
+
+  ngOnInit(): void {
+    this.loadUserProfile();
+  }
+
+  loadUserProfile(): void {
+    this.userProfileService.fetchUserProfile().subscribe(
+      (data) => {
+        this.user = data;
+      },
+      (error) => {
+        console.error('Error fetching user profile:', error);
+      }
+    );
+  }
 
 }
