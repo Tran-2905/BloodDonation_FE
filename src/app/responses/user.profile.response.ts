@@ -4,8 +4,8 @@ export interface UserProfile {
     bloodType: string;
     lastDonation: string | null;
     memberSince: string | null;
-    phone: string;
-    dob: string;
+    phoneNumber: string;
+    dateOfBirth: string;
     address: string;
     conditions: string | null;
     medications: string | null;

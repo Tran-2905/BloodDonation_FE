@@ -21,8 +21,8 @@ export class UserProfileComponent implements OnInit {
     bloodType: '',
     lastDonation: null,
     memberSince: null,
-    phone: '',
-    dob: '',
+    phoneNumber: '',
+    dateOfBirth: '',
     address: '',
     conditions: null,
     medications: null
