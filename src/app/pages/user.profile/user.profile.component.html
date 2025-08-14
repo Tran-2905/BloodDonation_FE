@@ -3,20 +3,20 @@
     <div class="profile-left">
         <div class="profile-card">
             <div class="profile-avatar">
-                <span class="avatar-letter">{{ user?.fullName?.charAt(0) }}</span>
+                <span class="avatar-letter">{{ user.fullName.charAt(0) }}</span>
             </div>
             <div class="profile-info">
-                <div class="profile-name">{{ user?.fullName }}</div>
-                <div class="profile-email">{{ user?.email }}</div>
+                <div class="profile-name">{{ user.fullName }}</div>
+                <div class="profile-email">{{ user.email }}</div>
                 <div class="profile-bloodtype">
                     <span class="blood-label">Blood Type:</span>
-                    <span class="blood-box">{{ user?.bloodType }}</span>
+                    <span class="blood-box">{{ user.bloodType }}</span>
                 </div>
                 <div class="profile-detail">
-                    <span>Last Donation:</span> <span>{{ user?.lastDonation }}</span>
+                    <span>Last Donation:</span> <span>{{ user.lastDonation }}</span>
                 </div>
                 <div class="profile-detail">
-                    <span>Member Since:</span> <span>{{ user?.memberSince }}</span>
+                    <span>Member Since:</span> <span>{{ user.memberSince }}</span>
                 </div>
                 <button class="btn-donate">Schedule Donation</button>
             </div>

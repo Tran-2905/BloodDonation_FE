@@ -14,10 +14,9 @@
     </div>
     <div class="auth-buttons" *ngIf="authService.isAuthenticated()">
         <button class="logout" (click)="authService.logout()">Đăng xuất</button>
-        <!-- hoặc hiển thị tên user, avatar, menu cá nhân... -->
     </div>
     <div class="user-section" *ngIf="authService.isAuthenticated()">
-        <div class="notification-bell" (click)="toggleNotifications()">
+        <div class="notification-bell" (click)="toggleNotifications($event)">
             <span class="bell-icon">&#128276;</span>
             <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
             <div class="notification-dropdown" *ngIf="showNotifications">
@@ -27,13 +26,10 @@
                 </div>
             </div>
         </div>
-        <div class="user-dropdown" (click)="toggleDropdown()" tabindex="0">
+        <div class="user-dropdown" (click)="toggleDropdown($event)">
             <div class="avatar">{{ userInitial }}</div>
+
             <div class="dropdown-menu" *ngIf="showDropdown">
-                <div class="user-info">
-                    <div class="name">{{ user?.name }}</div>
-                    <div class="email">{{ user?.email }}</div>
-                </div>
                 <div class="menu-item" routerLink="/profile">Profile</div>
                 <div class="menu-item" routerLink="/donation-history">Donation History</div>
                 <div class="menu-item" routerLink="/settings">Settings</div>

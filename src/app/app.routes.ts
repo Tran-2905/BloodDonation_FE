@@ -28,7 +28,7 @@ export const routes: Routes = [
             { path: 'blog/:id', component: BlogDetailComponent },
             { path: 'blog-register', component: RegisterBlogComponent },
             { path: 'dashboard', component: DashboardMemberComponent },
-            { path: 'user-profile', component: UserProfileComponent }
+            { path: 'profile', component: UserProfileComponent }
         ]
     }
 ];
