@@ -5,9 +5,9 @@ import { Router, RouterModule } from '@angular/router';
 import { DonationRegistration } from '../../models/donation.registration';
 import { Gender } from '../../models/enum';
 import { instanceToPlain } from 'class-transformer';
-import { RequestDonationService } from '../../services/requestdonation.service';
 import { BloodService } from '../../services/blood-service';
 import { BloodTypeResponse } from '../../responses/blood.response';
+import { Appointment } from '../../services/requestdonation.service';
 
 @Component({
   selector: 'app-registerdonation',
@@ -17,7 +17,7 @@ import { BloodTypeResponse } from '../../responses/blood.response';
 })
 export class RegisterDonationComponent implements OnInit {
 
-  constructor(private requestDonationService: RequestDonationService, private router: Router, private _bloodService: BloodService) { };
+  constructor(private requestDonationService: Appointment, private router: Router, private _bloodService: BloodService) { };
 
   bloodTypes: BloodTypeResponse[] = [];
 
@@ -93,7 +93,7 @@ export class RegisterDonationComponent implements OnInit {
 
     const payload = instanceToPlain(donationRegistration);
 
-    this.requestDonationService.requestDonation(payload).subscribe(
+    this.requestDonationService.requestAppointment(payload).subscribe(
       response => {
         console.log("successful:", response)
         this.router.navigate([''])

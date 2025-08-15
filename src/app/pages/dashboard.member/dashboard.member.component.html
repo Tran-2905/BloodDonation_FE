@@ -56,15 +56,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let appoint of appointments">
-                <td>{{ appoint.date }}</td>
-                <td>{{ appoint.time }}</td>
-                <td>{{ appoint.type }}</td>
+            <tr *ngIf="appointment">
+                <td [(ngModel)]="appointment.date">{{ appointment.date }}</td>
+                <td [(ngModel)]="appointment.time">{{ appointment.time }}</td>
+                <td [(ngModel)]="appointment.type">{{ appointment.type }}</td>
                 <td>
-                    <span [class.badge-upcoming]="appoint.status === 'Upcoming'">{{ appoint.status }}</span>
+                    <span [ngClass]="{
+                    'badge-completed': appointment.status === 'Confirmed',
+                    'badge-rejected': appointment.status === 'Rejected',
+                    'badge-upcoming': appointment.status === 'Pending'
+                    }">{{ appointment.status }}</span>
                 </td>
             </tr>
-            <tr *ngIf="appointments.length === 0">
+            <tr *ngIf="!appointment">
                 <td colspan="4">No upcoming appointments</td>
             </tr>
         </tbody>

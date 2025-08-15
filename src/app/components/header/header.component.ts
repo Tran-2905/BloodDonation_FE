@@ -19,7 +19,6 @@ export class HeaderComponent {
 
   constructor(public authService: AuthService) {
     this.user = this.authService.getUser();
-
   }
 
   get userInitial() {

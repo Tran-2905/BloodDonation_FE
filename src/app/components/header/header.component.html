@@ -30,6 +30,10 @@
             <div class="avatar">{{ userInitial }}</div>
 
             <div class="dropdown-menu" *ngIf="showDropdown">
+                <div class="user-info">
+                    <div class="name">{{ user?.name }}</div>
+                    <div class="email">{{ user?.email }}</div>
+                </div>
                 <div class="menu-item" routerLink="/profile">Profile</div>
                 <div class="menu-item" routerLink="/donation-history">Donation History</div>
                 <div class="menu-item" routerLink="/settings">Settings</div>
