@@ -6,7 +6,7 @@ import { AppointmentModel } from "../responses/appointment";
     providedIn: 'root'
 })
 
-export class Appointment {
+export class AppointmentService {
     constructor(private http: HttpClient) { }
     baseUrl: string = "http://localhost:8080/api/v1/appointment";
     requestAppointment(request: any): Observable<any> {

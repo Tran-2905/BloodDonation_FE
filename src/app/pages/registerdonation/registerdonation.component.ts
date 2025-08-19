@@ -7,7 +7,7 @@ import { Gender } from '../../models/enum';
 import { instanceToPlain } from 'class-transformer';
 import { BloodService } from '../../services/blood-service';
 import { BloodTypeResponse } from '../../responses/blood.response';
-import { Appointment } from '../../services/requestdonation.service';
+import { AppointmentService } from '../../services/appointment.service.';
 
 @Component({
   selector: 'app-registerdonation',
@@ -17,7 +17,7 @@ import { Appointment } from '../../services/requestdonation.service';
 })
 export class RegisterDonationComponent implements OnInit {
 
-  constructor(private requestDonationService: Appointment, private router: Router, private _bloodService: BloodService) { };
+  constructor(private requestDonationService: AppointmentService, private router: Router, private _bloodService: BloodService) { };
 
   bloodTypes: BloodTypeResponse[] = [];
 

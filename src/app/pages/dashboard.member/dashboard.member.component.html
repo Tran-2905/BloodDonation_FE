@@ -83,17 +83,17 @@
             <tr>
                 <th>Date</th>
                 <th>Type</th>
-                <th>Location</th>
                 <th>Units</th>
+                <th>Note</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let donation of donationHistory">
-                <td>{{ donation.date }}</td>
-                <td>{{ donation.type }}</td>
-                <td>{{ donation.location }}</td>
-                <td>{{ donation.units }}</td>
+            <tr *ngFor="let donation of donations">
+                <td>{{ donation.donationDate }}</td>
+                <td>{{ donation.bloodType }}</td>
+                <td>{{ donation.unitsDonated }}</td>
+                <td>{{ donation.notes }}</td>
                 <td>
                     <span [class.badge-completed]="donation.status === 'Completed'">{{ donation.status }}</span>
                 </td>
