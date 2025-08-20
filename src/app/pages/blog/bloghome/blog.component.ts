@@ -6,6 +6,7 @@ import { PostService } from '../../../services/post.service';
 import { CategoryService } from '../../../services/category.service';
 import { CategoryDto } from '../../../dtos/blog.categories.dto';
 import { blogDTO } from '../../../dtos/blog.dto';
+import { FeaturedPost } from '../../../dtos/featurePost';
 
 @Component({
   selector: 'app-blog',
@@ -20,9 +21,12 @@ export class BlogComponent {
   category: { id: number; name: string } = { id: 0, name: '' };
   selectedCategory: number | null = null;
   blogs: blogDTO[] = [];
+  featuredPosts: FeaturedPost[] = [];
+
   ngOnInit() {
     this.fetchAllCategories();
     this.fetchAllPosts();
+    this.fetchAllFeaturedPosts();
   }
   fetchAllCategories() {
     this._categoryService.fetchAllCategories().subscribe({
@@ -49,6 +53,19 @@ export class BlogComponent {
       }
     });
   }
+
+  fetchAllFeaturedPosts() {
+    this._postService.fetchFeaturedPosts().subscribe({
+      next: (data: FeaturedPost[]) => {
+        this.featuredPosts = data;
+        console.log('Fetched featured posts:', data);
+      },
+      error: (err) => {
+        console.error('Error fetching featured posts:', err);
+      }
+    });
+  }
+
   onCategorySelectorChange() {
     const selectedType = this.categories.find(t => t.id === this.selectedCategory);
     if (selectedType) {
@@ -71,34 +88,11 @@ export class BlogComponent {
     }
   }
 
-  blogPosts = [
-    {
-      id: 1,
-      title: 'Lợi ích sức khỏe khi hiến máu định kỳ',
-      author: 'Nguyễn Văn A',
-      date: '20/06/2025',
-      image: 'assets/blog1.jpg',
-      summary: 'Hiến máu không chỉ cứu người mà còn giúp bạn kiểm tra sức khỏe định kỳ, giảm nguy cơ bệnh tim mạch...'
-    },
-    {
-      id: 2,
-      title: 'Câu chuyện cảm động từ người nhận máu',
-      author: 'Trần Thị B',
-      date: '18/06/2025',
-      image: 'assets/blog2.jpg',
-      summary: 'Một giọt máu cho đi, một cuộc đời ở lại. Đọc câu chuyện về bé Minh được cứu sống nhờ cộng đồng hiến máu...'
-    },
-  ];
-
-
-  featuredPosts = [
-    { id: 1, title: 'Lợi ích sức khỏe khi hiến máu định kỳ' },
-    { id: 2, title: 'Câu chuyện cảm động từ người nhận máu' }
-  ];
-
   filterByCategory(categoryName: string, event: Event) {
     event.preventDefault();
     this.selectedCategory = this.categories.find(cat => cat.name === categoryName)?.id || null;
     this.onCategorySelectorChange();
   }
+
+
 }

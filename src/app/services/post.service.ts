@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { blogDTO } from "../dtos/blog.dto";
+import { FeaturedPost } from "../dtos/featurePost";
 
 @Injectable({
     providedIn: 'root'
@@ -28,5 +29,9 @@ export class PostService {
                 image_url: `${this.baseUrl}/${post.id}/image`
             }))
         );
+    }
+
+    fetchFeaturedPosts(): Observable<FeaturedPost[]> {
+        return this.http.get<FeaturedPost[]>(`${this.baseUrl}/featured`);
     }
 }

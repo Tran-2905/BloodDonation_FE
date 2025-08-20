@@ -20,10 +20,7 @@ export class DashboardMemberComponent implements OnInit {
   lastDonation = "2 months ago";
   bloodType = "A+";
   eligibleToDonate = true;
-
-
   eligibleDate = "September 15, 2023";
-
   appointment: AppointmentModel =
     { date: '', status: '', time: '', type: '' };
 

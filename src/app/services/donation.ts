@@ -11,10 +11,6 @@ export class DonationService {
     baseUrl: string = "http://localhost:8080/api/v1/donation";
     constructor(private http: HttpClient) { }
     getAllDonationFromUser(): Observable<DonationResponse[]> {
-        return this.http.get<DonationResponse[]>(`${this.baseUrl}/all`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        });
+        return this.http.get<DonationResponse[]>(`${this.baseUrl}/all`);
     }
 }
