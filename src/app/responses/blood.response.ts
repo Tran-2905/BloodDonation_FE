@@ -1,6 +1,9 @@
 export interface BloodTypeResponse {
     bloodType: string;
     bloodTypeId: number;
+    description: string;
+    percent: string;
+    fact: string;
 }
 
 export interface BloodCapacityResponse {

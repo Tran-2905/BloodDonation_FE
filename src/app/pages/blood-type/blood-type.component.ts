@@ -119,57 +119,6 @@ export class BloodTypeComponent implements OnInit {
   }
 
 
-  bloodTypeInfos = [
-    {
-      type: 'O-',
-      description: 'Universal donor. Can donate to all blood types. Most valuable in emergencies.',
-      percent: '6.6%',
-      fact: 'O- is the safest blood for transfusions to any patient.'
-    },
-    {
-      type: 'O+',
-      description: 'Most common blood type. Can donate to all positive blood types.',
-      percent: '37.5%',
-      fact: 'O+ is in high demand for trauma care.'
-    },
-    {
-      type: 'A-',
-      description: 'Can donate to A-, A+, AB-, AB+.',
-      percent: '6.3%',
-      fact: 'A- is rare and important for A and AB patients.'
-    },
-    {
-      type: 'A+',
-      description: 'Can donate to A+ and AB+.',
-      percent: '28.3%',
-      fact: 'A+ is the second most common blood type.'
-    },
-    {
-      type: 'B-',
-      description: 'Can donate to B-, B+, AB-, AB+.',
-      percent: '1.5%',
-      fact: 'B- is one of the rarest blood types.'
-    },
-    {
-      type: 'B+',
-      description: 'Can donate to B+ and AB+.',
-      percent: '20.6%',
-      fact: 'B+ is common in Asia.'
-    },
-    {
-      type: 'AB-',
-      description: 'Can donate to AB-, AB+.',
-      percent: '0.6%',
-      fact: 'AB- is the rarest blood type.'
-    },
-    {
-      type: 'AB+',
-      description: 'Universal recipient. Can receive from all blood types.',
-      percent: '1.2%',
-      fact: 'AB+ can receive any blood type safely.'
-    }
-  ];
-
   // Donation process info
   donationSteps = [
     {

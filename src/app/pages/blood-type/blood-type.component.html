@@ -13,9 +13,9 @@
     <div *ngIf="activeTab === 'types'" class="types-tab">
         <h2>Blood Types</h2>
         <div class="bloodtype-list">
-            <div *ngFor="let info of bloodTypeInfos" class="bloodtype-card">
+            <div *ngFor="let info of bloodTypes" class="bloodtype-card">
                 <div class="bloodtype-header">
-                    <span class="bloodtype-label">{{ info.type }}</span>
+                    <span class="bloodtype-label">{{ info.bloodType }}</span>
                     <span class="bloodtype-percent">{{ info.percent }}</span>
                 </div>
                 <div class="bloodtype-desc">{{ info.description }}</div>
