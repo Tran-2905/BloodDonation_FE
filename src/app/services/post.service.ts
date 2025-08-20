@@ -34,4 +34,13 @@ export class PostService {
     fetchFeaturedPosts(): Observable<FeaturedPost[]> {
         return this.http.get<FeaturedPost[]>(`${this.baseUrl}/featured`);
     }
+
+    fetchPostsByCategory(categoryId: number): Observable<blogDTO[]> {
+        return this.http.get<blogDTO[]>(`${this.baseUrl}/category/${categoryId}`).pipe(
+            map(posts => posts.map(post => ({
+                ...post,
+                image_url: `${this.baseUrl}/${post.id}/image`
+            })))
+        );
+    }
 }

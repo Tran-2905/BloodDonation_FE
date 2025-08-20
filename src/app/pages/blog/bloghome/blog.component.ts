@@ -18,7 +18,7 @@ export class BlogComponent {
   constructor(private _categoryService: CategoryService, private _postService: PostService) { }
   searchTerm = '';
   categories: CategoryDto[] = [];
-  category: { id: number; name: string } = { id: 0, name: '' };
+  category: CategoryDto = { id: 0, name: '', slug: '' };
   selectedCategory: number | null = null;
   blogs: blogDTO[] = [];
   featuredPosts: FeaturedPost[] = [];
@@ -34,7 +34,6 @@ export class BlogComponent {
         this.categories = data;
         if (this.categories.length && this.selectedCategory === null) {
           this.selectedCategory = this.categories[0].id;
-          this.onCategorySelectorChange();
         }
       },
       error: (err) => {
@@ -69,20 +68,13 @@ export class BlogComponent {
   onCategorySelectorChange() {
     const selectedType = this.categories.find(t => t.id === this.selectedCategory);
     if (selectedType) {
-      this._categoryService.fetchCategoryById(selectedType.id).subscribe({
-        next: (data: CategoryDto) => {
-          if (data && data.name && data.id) {
-            this.category = {
-              id: data.id,
-              name: data.name
-            };
-          } else {
-            this.category = { id: 0, name: '' };
-          }
+      this._postService.fetchPostsByCategory(selectedType.id).subscribe({
+        next: (data: blogDTO[]) => {
+          this.blogs = data;
+          console.log('Fetched posts for category:', data);
         },
         error: (err) => {
-          console.error(err);
-          this.category = { id: 0, name: '' };
+          console.error('Error fetching posts for category:', err);
         }
       });
     }
@@ -93,6 +85,5 @@ export class BlogComponent {
     this.selectedCategory = this.categories.find(cat => cat.name === categoryName)?.id || null;
     this.onCategorySelectorChange();
   }
-
 
 }
